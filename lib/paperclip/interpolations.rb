@@ -1,3 +1,5 @@
+require 'interpolated_string'
+
 module Paperclip
   # This module contains all the methods that are available for interpolation
   # in paths and urls. To add your own (or override an existing one), you
@@ -29,7 +31,7 @@ module Paperclip
     # an interpolation pattern for Paperclip to use.
     def self.interpolate pattern, *args
       pattern = args.first.instance.send(pattern) if pattern.kind_of? Symbol
-      all.reverse.inject( pattern.dup ) do |result, tag|
+      r = all.reverse.inject(InterpolatedString.new(pattern)) do |result, tag|
         result.gsub(/:#{tag}/) do |match|
           send( tag, *args )
         end
