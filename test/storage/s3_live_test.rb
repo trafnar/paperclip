@@ -27,7 +27,7 @@ unless ENV["S3_TEST_BUCKET"].blank?
 
         teardown do
           @file.close
-          @dummy.destroy if @dummy.persisted? and !@dummy.destroyed?
+          @dummy.destroy
         end
 
         should "still return a Tempfile when sent #to_file" do
@@ -64,7 +64,7 @@ unless ENV["S3_TEST_BUCKET"].blank?
         @dummy.save
       end
 
-      teardown { @dummy.destroy unless @dummy.destroyed? }
+      teardown { @dummy.destroy }
 
       should "return an unescaped version for path" do
         assert_match /.+\/spaced file\.png/, @dummy.avatar.path
