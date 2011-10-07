@@ -51,11 +51,12 @@ class InterpolatedStringTest < Test::Unit::TestCase
     end
   end
 
-  context "#to_s" do
-    subject { InterpolatedString.new("paperclip").to_s }
+  context "#force_escape" do
+    subject { InterpolatedString.new("paperclip") }
+    setup { subject.force_escape }
 
-    should "returns a String object" do
-      assert subject.is_a? String
+    should "sets escaped flag to true" do
+      assert subject.escaped?
     end
   end
 end

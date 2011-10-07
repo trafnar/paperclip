@@ -24,4 +24,8 @@ class InterpolatedString < String
       self
     end
   end
+
+  def force_escape
+    @escaped = true
+  end
 end

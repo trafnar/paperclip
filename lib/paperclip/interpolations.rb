@@ -31,11 +31,13 @@ module Paperclip
     # an interpolation pattern for Paperclip to use.
     def self.interpolate pattern, *args
       pattern = args.first.instance.send(pattern) if pattern.kind_of? Symbol
-      r = all.reverse.inject(InterpolatedString.new(pattern)) do |result, tag|
+      interpolated_string = all.reverse.inject(InterpolatedString.new(pattern)) do |result, tag|
         result.gsub(/:#{tag}/) do |match|
           send( tag, *args )
         end
       end
+      interpolated_string.force_escape if pattern =~ /:url/
+      interpolated_string
     end
 
     # Returns the filename, the same way as ":basename.:extension" would.
