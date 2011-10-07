@@ -3,15 +3,15 @@ require './test/helper'
 class InterpolatedStringTest < Test::Unit::TestCase
   context "inheritance" do
     should "inherited from String" do
-      assert InterpolatedString.new("paperclip").is_a? String
+      assert Paperclip::InterpolatedString.new("paperclip").is_a? String
     end
   end
 
   context "#escape" do
-    subject { InterpolatedString.new("paperclip foo").escape }
+    subject { Paperclip::InterpolatedString.new("paperclip foo").escape }
 
     should "returns an InterpolatedString object" do
-      assert subject.is_a? InterpolatedString
+      assert subject.is_a? Paperclip::InterpolatedString
     end
 
     should "escape the output string" do
@@ -24,10 +24,10 @@ class InterpolatedStringTest < Test::Unit::TestCase
   end
 
   context "#unescape" do
-    subject { InterpolatedString.new("paperclip%20foo").escape.unescape }
+    subject { Paperclip::InterpolatedString.new("paperclip%20foo").escape.unescape }
 
     should "returns an InterpolatedString object" do
-      assert subject.is_a? InterpolatedString
+      assert subject.is_a? Paperclip::InterpolatedString
     end
 
     should "unescape the output string" do
@@ -40,7 +40,7 @@ class InterpolatedStringTest < Test::Unit::TestCase
   end
 
   context "#escaped?" do
-    subject { InterpolatedString.new("paperclip") }
+    subject { Paperclip::InterpolatedString.new("paperclip") }
 
     should "returns true if string was escaped" do
       assert subject.escape.escaped?
@@ -52,7 +52,7 @@ class InterpolatedStringTest < Test::Unit::TestCase
   end
 
   context "#force_escape" do
-    subject { InterpolatedString.new("paperclip") }
+    subject { Paperclip::InterpolatedString.new("paperclip") }
     setup { subject.force_escape }
 
     should "sets escaped flag to true" do

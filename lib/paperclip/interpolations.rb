@@ -1,4 +1,4 @@
-require 'interpolated_string'
+require 'paperclip/interpolated_string'
 
 module Paperclip
   # This module contains all the methods that are available for interpolation
