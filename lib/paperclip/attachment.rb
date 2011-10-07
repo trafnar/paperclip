@@ -133,7 +133,7 @@ module Paperclip
       url = original_filename.nil? ? interpolate(default_url, style_name) : interpolate(@options.url, style_name)
 
       url << (url.include?("?") ? "&" : "?") + updated_at.to_s if use_timestamp && updated_at
-      url.escape
+      url.respond_to?(:escape) ? url.escape : URI.escape(url)
     end
 
     # Returns the path of the attachment as defined by the :path option. If the
@@ -141,7 +141,8 @@ module Paperclip
     # on disk. If the file is stored in S3, the path is the "key" part of the
     # URL, and the :bucket option refers to the S3 bucket.
     def path(style_name = default_style)
-      original_filename.nil? ? nil : interpolate(@options.path, style_name).unescape
+      path = original_filename.nil? ? nil : interpolate(@options.path, style_name)
+      path.respond_to?(:unescape) ? path.unescape : path
     end
 
     # Alias to +url+
